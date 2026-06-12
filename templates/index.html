@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h1>{{ group.name }}</h1>
+        <p>Новый взгляд на русский рок. Глубокие тексты, мощные риффы и неповторимая энергетика.</p>
+        <div class="hero-buttons">
+            <a href="{{ url_for('music') }}" class="btn">Слушать</a>
+            <a href="{{ url_for('about') }}" class="btn btn-outline">О группе</a>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Последние релизы</h2>
+        </div>
+        <div class="songs-list">
+            {% for song in group.songs[:3] %}
+            <div class="song-item">
+                <div class="song-info">
+                    <h3>{{ song.title }}</h3>
+                    <p>{{ song.description }}</p>
+                </div>
+                <div class="song-date">{{ song.release_date }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section bg-light">
+    <div class="container">
+        <div class="section-title">
+            <h2>Ближайшие концерты</h2>
+        </div>
+        <div class="concerts-list">
+            {% for concert in group.concerts %}
+            <div class="concert-item">
+                <h3>{{ concert.location }}</h3>
+                <p>{{ concert.description }}</p>
+                <p class="date">{{ concert.date }}</p>
+            </div>
+            {% else %}
+            <p style="text-align: center;">В настоящее время концерты не запланированы. Следите за обновлениями!</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

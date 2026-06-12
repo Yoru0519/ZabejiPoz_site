@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Музыка{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Наша музыка</h2>
+        </div>
+        
+        <h3>Оригинальные композиции</h3>
+        <div class="songs-list">
+            {% for song in group.songs %}
+            <div class="song-item">
+                <div class="song-info">
+                    <h3>{{ song.title }}</h3>
+                    <p>{{ song.description }}</p>
+                    
+                    {% if song.file %}
+                    <div class="audio-player">
+                        <audio controls>
+                            <source src="{{ url_for('static', filename='music/' + song.file) }}" type="audio/mpeg">
+                            Ваш браузер не поддерживает аудио элемент.
+                        </audio>
+                        <p class="release-date">Выпуск: {{ song.release_date }}</p>
+                    </div>
+                    {% else %}
+                    <p class="not-available">Аудиофайл временно недоступен</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <h3 style="margin-top: 50px;">Каверы</h3>
+        <p>Группа также исполняет кавер-версии известных рок-композиций, привнося в них своё уникальное звучание. Все каверы доступны в нашем Telegram-канале.</p>
+        
+        <div class="music-platforms" style="margin-top: 40px; text-align: center;">
+            <h3>Слушайте нас на платформах</h3>
+            <div class="platform-buttons" style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+                <a href="{{ group.socials.telegram }}" class="btn" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+                <a href="{{ group.socials.youtube }}" class="btn" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+                <a href="{{ group.socials.vk }}" class="btn" target="_blank"><i class="fab fa-vk"></i> VK</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

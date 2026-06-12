@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}О группе{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <h2>О группе</h2>
+        </div>
+        <div class="about-content">
+            <p>Группа "{{ group.name }}" - это свежее дыхание в русском роке, объединяющее мощные гитарные риффы, глубокие тексты и неповторимую энергетику живых выступлений.</p>
+            
+            <h3>История</h3>
+            <p>Коллектив был основан в 2023 году группой талантливых музыкантов, познакомившихся в музыкальной школе. За время своего существования группа сменила несколько названий, такие как СиП (Серп и Молот), До.Ли.На. прежде чем остановиться на нынешнем - "{{ group.name }}", которое как нельзя лучше отражает их философию.</p>
+            
+            <p>Несмотря на молодость, группа уже успела выпустить несколько запоминающихся треков и провести серию концертов, завоевав преданных поклонников.</p>
+            
+            <h3>Участники</h3>
+            <div class="members-grid">
+                {% for member in group.members %}
+                <div class="member-card">
+                    <div class="member-img">
+                        <img src="{{ url_for('static', filename='images/members/' + member.photo) }}" 
+                            alt="{{ member.name }}"
+                            data-fallback="{{ url_for('static', filename='images/member-placeholder.jpg') }}"
+                            onerror="replaceWithFallback(this)">
+                    </div>
+                    <div class="member-info">
+                        <h3>{{ member.name }}</h3>
+                        <p class="role">{{ member.role }}</p>
+                        <p>{{ member.bio }}</p>
+                    </div>
+                </div>
+                <script>
+                    function replaceWithFallback(img) {
+                        img.onerror = null;
+                        img.src = img.dataset.fallback;
+                    }
+                    </script>
+                {% endfor %}
+            </div>
+            
+            <h3>Интересные факты</h3>
+            <ul class="facts-list">
+                {% for fact in group.facts %}
+                <li>{{ fact }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Тест о группе{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Тест о группе "{{ group.name }}"</h2>
+        </div>
+        
+        <div class="quiz-container">
+            {% if not show_results %}
+            <form method="POST">
+                {% for q_idx in range(questions|length) %}
+                <div class="quiz-question">
+                    <h3>{{ q_idx + 1 }}. {{ questions[q_idx].question }}</h3>
+                    <div class="quiz-options">
+                        {% for o_idx in range(questions[q_idx].options|length) %}
+                        <div class="quiz-option">
+                            <input type="radio" id="q{{ q_idx }}_{{ o_idx }}" name="q{{ q_idx }}" value="{{ o_idx }}">
+                            <label for="q{{ q_idx }}_{{ o_idx }}">{{ questions[q_idx].options[o_idx] }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn" style="display: block; margin: 0 auto;">Проверить ответы</button>
+            </form>
+            {% else %}
+            <div class="results">
+                <h3>Ваши результаты</h3>
+                <div class="score">{{ score }} из {{ total }}</div>
+                
+                {% for answer in answers %}
+                <div class="answer-item {% if answer.is_correct %}correct{% else %}incorrect{% endif %}">
+                    <h4>Вопрос: {{ answer.question }}</h4>
+                    <p><strong>Ваш ответ:</strong> {{ answer.user_answer }}</p>
+                    <p><strong>Правильный ответ:</strong> {{ answer.correct_answer }}</p>
+                </div>
+                {% endfor %}
+                
+                <a href="{{ url_for('quiz') }}" class="btn" style="margin-top: 30px;">Пройти тест снова</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}script.js

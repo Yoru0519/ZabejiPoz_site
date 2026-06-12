@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Контакты{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Контакты</h2>
+        </div>
+        
+        <div class="contacts-content">
+            <h3>Свяжитесь с нами</h3>
+            <p>Email: zabejipoj@gmail.com</p>
+            <p>Телефон: +7 (800) 555-35-35</p>
+            
+            <h3>Социальные сети</h3>
+            <div class="social-links">
+                <a href="{{ group.socials.telegram }}" target="_blank">Telegram</a>
+                <a href="{{ group.socials.youtube }}" target="_blank">YouTube</a>
+                <a href="{{ group.socials.vk }}" target="_blank">VK</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
